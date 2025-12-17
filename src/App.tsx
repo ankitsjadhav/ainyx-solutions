@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Layout } from "./components/layout/Layout";
+import { RightPanel } from "./components/layout/RightPanel";
+import { FlowCanvas } from "./components/canvas/FlowCanvas";
+import { AppOverlay } from "./components/canvas/AppOverlay";
+import { Toaster } from "@/components/ui/sonner";
+import { useStore } from "./lib/store";
+import "@xyflow/react/dist/style.css";
+import { ReactFlowProvider } from "@xyflow/react";
+import { useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { selectedAppId, theme } = useStore();
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(theme);
+  }, [theme]);
+
+  useEffect(() => {
+    if (
+      !document.documentElement.classList.contains("dark") &&
+      !document.documentElement.classList.contains("light")
+    ) {
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ReactFlowProvider>
+      <Layout rightPanel={<RightPanel />}>
+        {selectedAppId && (
+          <div className="h-full w-full">
+            <FlowCanvas />
+          </div>
+        )}
+        <AppOverlay />
+        <Toaster />
+      </Layout>
+    </ReactFlowProvider>
+  );
 }
 
-export default App
+export default App;
