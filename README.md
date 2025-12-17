@@ -1,4 +1,4 @@
-# SaaS Infrastructure Visualizer
+# Infrastructure Visualizer
 
 A premium, ReactFlow based application for visualizing and editing cloud service infrastructure. Built with React, TypeScript, Vite, Tailwind CSS, and Zustand.
 
