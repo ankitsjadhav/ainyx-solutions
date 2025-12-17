@@ -113,7 +113,6 @@ export function AppOverlay() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, filteredApps, highlightedIndex, setSelectedAppId]);
 
-  // Close on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -129,7 +128,7 @@ export function AppOverlay() {
 
   return (
     <div
-      className="fixed top-24 left-24 z-[9999]"
+      className="fixed top-24 left-4 md:left-24 z-[50]"
       style={{ isolation: "isolate" }}
     >
       <div className="flex flex-col gap-1.5 w-[280px]" ref={dropdownRef}>
@@ -152,7 +151,6 @@ export function AppOverlay() {
             />
           )}
         </div>
-
         <div className="relative">
           <button
             onClick={() => setIsOpen(!isOpen)}

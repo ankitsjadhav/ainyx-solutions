@@ -1,22 +1,84 @@
-import { Bell, Share2, MoreHorizontal, Slash } from "lucide-react";
+import {
+  Bell,
+  Share2,
+  MoreHorizontal,
+  Slash,
+  Menu,
+  Home,
+  Layers,
+  Users,
+  Sun,
+  Moon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export function Header() {
+  const { toggleTheme, theme } = useStore();
+
   return (
     <header className="h-14 border-b bg-background/50 backdrop-blur-md px-4 flex items-center justify-between z-10">
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="md:hidden mr-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              side="bottom"
+              align="start"
+              className="w-16 p-2 flex flex-col items-center gap-4 bg-background/95 backdrop-blur-xl border-white/10"
+            >
+              <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
+                <Layers className="h-5 w-5" />
+              </div>
+              <nav className="flex flex-col gap-2 w-full items-center">
+                <button className="h-9 w-9 rounded-lg hover:bg-muted/20 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+                  <Home className="h-5 w-5" />
+                </button>
+                <button className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary transition-colors">
+                  <Layers className="h-5 w-5" />
+                </button>
+                <button className="h-9 w-9 rounded-lg hover:bg-muted/20 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+                  <Users className="h-5 w-5" />
+                </button>
+              </nav>
+              <div className="h-px w-full bg-border/50" />
+              <button
+                onClick={toggleTheme}
+                className="h-9 w-9 rounded-lg hover:bg-muted/20 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
+              </button>
+            </PopoverContent>
+          </Popover>
+        </div>
+
         <div className="flex items-center gap-2 hover:text-foreground cursor-pointer transition-colors">
           <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center">
             <div className="w-3 h-3 bg-primary rounded-full" />
           </div>
-          <span className="font-medium">supertokens-golang</span>
+          <span className="font-medium hidden sm:inline">
+            supertokens-golang
+          </span>
+          <span className="font-medium sm:hidden">App</span>
         </div>
         <Slash className="w-3 h-3 text-muted-foreground/50 -rotate-12" />
         <div className="flex items-center gap-2 text-foreground font-medium">
-          <span>dev</span>
+          <span className="hidden sm:inline">dev</span>
           <Badge
             variant="secondary"
             className="text-[10px] h-5 px-1.5 bg-muted text-muted-foreground"
@@ -42,6 +104,7 @@ export function Header() {
             ? "Error Mode: ON"
             : "Simulate Error"}
         </Button>
+
         <Button
           variant="outline"
           size="sm"
