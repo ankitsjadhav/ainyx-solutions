@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { SyncedSliderInput } from "./SyncedSliderInput";
 import { cn } from "@/lib/utils";
 
@@ -84,6 +85,19 @@ export function NodeInspector() {
           </div>
         </TabsContent>
       </Tabs>
+      <div className="pt-4 border-t">
+        <Button
+          variant="destructive"
+          className="w-full"
+          onClick={() => {
+            const { setNodes, nodes, setSelectedNodeId } = useStore.getState();
+            setNodes(nodes.filter((n) => n.id !== node.id));
+            setSelectedNodeId(null);
+          }}
+        >
+          Delete Node
+        </Button>
+      </div>
     </div>
   );
 }
