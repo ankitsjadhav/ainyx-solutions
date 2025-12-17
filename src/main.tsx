@@ -5,10 +5,6 @@ import App from "./App.tsx";
 import { AppProviders } from "./components/AppProviders";
 
 async function enableMocking() {
-  if (!import.meta.env.DEV) {
-    return;
-  }
-
   const { worker } = await import("./mocks/browser");
 
   return worker.start();
